@@ -1,14 +1,19 @@
 const express = require('express');
 const { createServer } = require('node:http');
+const { join } = require('node:path');
 
 // express initializes app to be a function handler that can be used for supply to an HTTP server
 const app = express();
 const server = createServer(app);
 
-// define a router handler
+// serving HTML
+// refactor reoute handler to use sendFile
 app.get('/', (req,res) => {
-    res.send('<h1>My World, My Server');
+    res.sendFile(join(__dirname, 'index.html'));
 });
+
+// serve static files (style.css)
+app.use(express.static(__dirname));
 
 // http server listener on port 1337
 server.listen(1337, () => {
